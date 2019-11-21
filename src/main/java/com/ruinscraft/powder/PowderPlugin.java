@@ -72,6 +72,14 @@ public class PowderPlugin extends JavaPlugin {
             return;
         }
 
+        // NoteBlockAPI
+        boolean NoteBlockAPI = true;
+        if (!Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI")){
+            getLogger().severe("*** NoteBlockAPI is not installed or not enabled. ***");
+            NoteBlockAPI = false;
+            return;
+        }
+
         is1_13 = Bukkit.getVersion().contains("1.13") ? true : false;
         config = ConfigUtil.loadConfig();
         creationTask = new PowdersCreationTask();
