@@ -2,26 +2,87 @@ package com.ruinscraft.powder.model;
 
 import org.bukkit.Location;
 
+import com.ruinscraft.powder.PowdersCreationTask;
+
 public interface PowderElement extends Cloneable {
 
-    void create(Location location); // create this element at this location
+	void create(Location location); // create this element at this location
 
-    int getStartTime(); // what tick to start at
+	/**
+	 * Get what tick the element starts at (0 being the initial creation of the Powder)
+	 * @return integer
+	 */
+	int getStartTime();
 
-    int getRepeatTime(); // iterate after how many ticks
+	/**
+	 * Get how many ticks after the start time to iterate
+	 * @return integer
+	 */
+	int getRepeatTime();
 
-    int getLockedIterations(); // how many times to iterate; 0 if unlimited
+	/**
+	 * Set what tick the element starts at (0 being the initial creation of the Powder)
+	 * @param startTime
+	 */
+	void setStartTime(int startTime);
 
-    void setLockedIterations(int lockedIterations); // set how many times iterated so far
+	/**
+	 * Set how many ticks after the start time to iterate
+	 * @param repeatTime
+	 */
+	void setRepeatTime(int repeatTime);
 
-    int getIterations(); // how many iterations so far
+	/**
+	 * Get how many times to iterate this element
+	 * 0 if unlimited
+	 * @return integer
+	 */
+	int getLockedIterations(); // how many times to iterate; 0 if unlimited
 
-    void iterate(); // add to getIterations()
+	/**
+	 * Set how many times to iterate this element
+	 * 0 if unlimited
+	 * @param lockedIterations
+	 */
+	void setLockedIterations(int lockedIterations);
 
-    int getNextTick(); // the tick for the PowderElement to play
+	/**
+	 * Get how many times this element has iterated so far
+	 * @return integer
+	 */
+	int getIterations();
 
-    void setStartingTick(); // sets the starting tick, right before the element starts
+	/**
+	 * Iterates this element
+	 */
+	void iterate();
 
-    PowderElement clone();
+	/**
+	 * Get the next tick this element will iterate at
+	 * @return integer
+	 */
+	int getNextTick();
+
+	/**
+	 * Sets the starting tick using the defined tick in PowdersCreationTask right before the element is used
+	 */
+	void setStartingTick();
+
+	/**
+	 * Get the time (in ticks) this element has been in existence
+	 * @return
+	 */
+	default int getTimeAlive() {
+		int startTime = getStartTime();
+		int iterations = getRepeatTime() * (getIterations() - 1);
+		int timeUntilNext = getRepeatTime() - (getNextTick() - PowdersCreationTask.getCurrentTick());
+		return startTime + iterations + timeUntilNext;
+	}
+
+	/**
+	 * Clones this PowderElement
+	 * @return a cloned PowderElement
+	 */
+	PowderElement clone();
 
 }

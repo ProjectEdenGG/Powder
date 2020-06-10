@@ -7,6 +7,8 @@ PREFIX_CLICK: '/{command}'
 ## {user}
 GENERAL_NO_PERMISSION: 'You don''t have permission to do this.'
 ## {user}
+GENERAL_LOADING: '&7Powder is currently loading, please wait until it loads!'
+## {user}
 LOADING_ALERT: '&7Your Powders were canceled due to a reload.'
 ## {user}
 LOADING_ALREADY: '&cYou can''t reload while reloading!'
@@ -54,19 +56,56 @@ ATTACH_SYNTAX: '&c/{command} attach <Powder>'
 ATTACH_UNKNOWN: '&cUnknown Powder ''{powder}''.'
 ## {user}
 ATTACH_NO_ENTITY: '&cNo entity found within your line of sight.'
+## {user} {powder}
+ATTACH_ONE_POWDER_PER_ENTITY: '&cYou can only attach one Powder per entity!'
+## {user} {powder}
+ATTACH_TOWNY_NO_PLACE: '&cCould not attach Powder due to Towny limits. Are you not in a Town? Have you placed too many in the Town?'
+## {user} {powder}
+ATTACH_PLOTSQUARED_NO_PLACE: '&cCould not attach Powder due to PlotSquared limits. Are you in a road? Have you placed too many in the plot?'
+## {user} {powder} {amnt}
+ATTACH_TOO_MANY_CREATED: 'You have too many Powders created already. ({amnt})'
 ## {user} {powder} {player}
 ATTACH_SUCCESS_PLAYER: '&7Successfully assigned ''{powder}'' to ''{player}''.'
 ## {user} {powder} {entity}
 ATTACH_SUCCESS_ENTITY: '&7Successfully assigned ''{powder}'' to ''{entity}''.'
-## {user} {command}
-CREATE_SYNTAX: '&c/{command} create <name> <Powder>'
-## {user} {name} {powder}
-CREATE_ALREADY_EXISTS: '&cAn active Powder with this name is already active!'
+## {user} {powder} {amnt}
+ATTACH_TOO_MANY_CREATED: 'You have too many Powders created already. ({amnt})'
+## {user} {label}
+ARROW_SYNTAX: '&cPlease enter a proper subcommand. Try /powder arrow trail <Powder>'
+## {user}
+ARROW_TRAIL_REMOVED: '&7Arrow trail removed.'
+## {user}
+ARROW_HIT_REMOVED: '&7Arrow hit removed.'
+## {user}
+ARROW_SYNTAX_POWDER: '&cPlease enter a Powder.'
 ## {user} {powder}
-CREATE_UNKNOWN: '&cUnknown Powder ''{powder}''.'
-## {user} {powder} {name}
-CREATE_SUCCESS: '&7Successfully created ''{name}''.'
+ARROW_UNKNOWN_POWDER: '&cUnknown Powder.'
+## {user} {powder}
+ARROW_TRAIL_SAVED: '&7Arrow trail Powder saved.'
+## {user} {powder}
+ARROW_HIT_SAVED: '&7Arrow hit Powder saved.'
 ## {user} {command}
+STATION_SYNTAX: '&c/{command} station <Powder> [reference name] [loop]'
+## {user} {name} {powder}
+STATION_ALREADY_EXISTS: '&cOne with this name is already active!'
+## {user} {powder}
+STATION_UNKNOWN: '&cUnknown Powder ''{powder}''.'
+## {user} {powder} {name}
+STATION_SUCCESS: '&7Successfully stationed ''{name}''.'
+## {user} {powder}
+STATION_TOWNY_NO_PLACE: '&cCould not station Powder due to Towny limits. Are you not in a Town? Have you placed too many in the Town?'
+## {user} {powder}
+STATION_PLOTSQUARED_NO_PLACE: '&cCould not station Powder due to PlotSquared limits. Are you in a road? Have you placed too many in the plot?'
+## {user} {powder} {amnt}
+STATION_TOO_MANY_CREATED: 'You have too many Powders created already. ({amnt})'
+## {user} {command}
+CREATED_PREFIX: '&7Created Powders:'
+## {name} {location}
+CREATED: '&d{name} &7{location}'
+## {name} {powders}
+CREATED_HOVER: '&7Powders: {powders} || &aClick to cancel this active Powder'
+## {command} {name}
+CREATED_CLICK: '/{command} remove {name}'
 ADDTO_SYNTAX: '&c/{command} addto <name> <Powder>'
 ## {user} {name}
 ADDTO_DOES_NOT_EXIST: '&cThe active Powder ''{name}'' does not exist.'
@@ -147,6 +186,7 @@ HELP_SEARCH: '&d/powder search <term> [page] &7- Search for a Powder'
 HELP_RELOAD: '&d/powder reload &7- Reload Powder'
 HELP_NEARBY: '&d/powder nearby &7- Show nearby Powders'
 HELP_CREATE: '&d/powder create <name> <Powder> &7- Creates a named Powder at your location'
+HELP_CREATED: '&d/powder created &7- Lists the Powders you have made'
 HELP_REMOVE: '&d/powder remove <name> &7- Removes a named Powder'
 HELP_ATTACH: '&d/powder attach <Powder> &7- Attaches a powder to an entity in front of you'
 HELP_ADDTO: '&d/powder addto <name> <Powder> &7- Adds a Powder to an existing named Powder'

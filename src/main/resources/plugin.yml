@@ -4,6 +4,7 @@ version: ${version}
 depend: [NoteBlockAPI]
 api-version: 1.13
 authors: [StupidDrew9, royalkingkb]
+softdepend: [Towny, PlotSquared, PlotCubed]
 commands:
   powder:
     aliases: [pow, pdr, powders]
@@ -14,13 +15,17 @@ permissions:
     description: Enables access to all commands and subcommands
     children:
       powder.powder.*: true
+      powder.command: true
+      powder.help: true
+      powder.nearby: true
       powder.reload: true
       powder.attach: true
+      powder.arrow: true
       powder.cancel: true
-      powder.create: true
-      powder.addto: true
-      powder.removefrom: true
+      powder.station: true
+      powder.stationany: true
       powder.remove: true
+      powder.removeany: true
   powder.powder.*:
     default: op
     description: Allows usage of all Powders
@@ -38,19 +43,25 @@ permissions:
     description: Enables access to the '/powder reload' command, allowing a user to reload Powders/locale/storage/etc.
   powder.attach:
     default: op
+    description: Enables access to attaching Powders to any entity or player you're looking at
+  powder.attachany:
+    default: op
     description: Enables access to attaching Powders to an entity or player you're looking at
   powder.cancel:
     default: op
     description: Allows a user to cancel Powders which they did not create themselves
-  powder.create:
+  powder.arrow:
+    default: op
+    description: Allows a user to attach Powders to their arrows and attach Powders to the players those arrows hit
+  powder.station:
     default: op
     description: Creates a stationary Powder at your location
-  powder.addto:
+  powder.stationany:
     default: op
-    description: Adds a Powder to a created Powder
-  powder.removefrom:
-    default: op
-    description: Removes a Powder from a created Powder
+    description: Creates a stationary Powder at any location with no limit
   powder.remove:
     default: op
-    description: Removes any Powder
+    description: Removes a stationary Powder you made
+  powder.removeany:
+    default: op
+    description: Removes any stationary Powder
