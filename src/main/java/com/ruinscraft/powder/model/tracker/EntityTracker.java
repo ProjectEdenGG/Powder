@@ -2,7 +2,6 @@ package com.ruinscraft.powder.model.tracker;
 
 import com.ruinscraft.powder.PowderPlugin;
 import com.ruinscraft.powder.integration.PlotSquaredHandler;
-import com.ruinscraft.powder.integration.TownyHandler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -119,10 +118,7 @@ public class EntityTracker implements Tracker {
 		}
 
 		Location location = getCurrentLocation();
-		if (PowderPlugin.get().hasTowny()) {
-			TownyHandler towny = PowderPlugin.get().getTownyHandler();
-			return towny.hasPermissionForPowder(possibleOwner, location);
-		} else if (PowderPlugin.get().hasPlotSquared()) {
+		if (PowderPlugin.get().hasPlotSquared()) {
 			PlotSquaredHandler plotsquared = PowderPlugin.get().getPlotSquaredHandler();
 			return plotsquared.hasPermissionForPowder(possibleOwner.getUniqueId(), location);
 		}

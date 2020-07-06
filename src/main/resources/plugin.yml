@@ -2,7 +2,7 @@ main: ${mainClass}
 name: ${name}
 version: ${version}
 depend: [NoteBlockAPI]
-api-version: 1.13
+api-version: "1.15"
 authors: [StupidDrew9, royalkingkb]
 softdepend: [Towny, PlotSquared, PlotCubed]
 commands:

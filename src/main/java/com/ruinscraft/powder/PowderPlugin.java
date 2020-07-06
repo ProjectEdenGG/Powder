@@ -2,7 +2,6 @@ package com.ruinscraft.powder;
 
 import com.ruinscraft.powder.command.PowderCommand;
 import com.ruinscraft.powder.integration.PlotSquaredHandler;
-import com.ruinscraft.powder.integration.TownyHandler;
 import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.storage.JSONStorage;
@@ -39,7 +38,6 @@ public class PowderPlugin extends JavaPlugin {
 	private Storage storage;
 
 	private static boolean isLoading;
-	private static boolean is1_13;
 
 	private boolean fastMode;
 	private boolean asyncMode;
@@ -47,7 +45,6 @@ public class PowderPlugin extends JavaPlugin {
 	private int maxCreatedPowders;
 
 	private PlotSquaredHandler plotSquared;
-	private TownyHandler towny;
 
 	public static PowderPlugin get() {
 		return instance;
@@ -90,7 +87,6 @@ public class PowderPlugin extends JavaPlugin {
             return;
         }
 
-        is1_13 = Bukkit.getVersion().contains("1.13") ? true : false;
 		config = ConfigUtil.loadConfig();
 		creationTask = new PowdersCreationTask();
 		creationTask.runTaskTimer(PowderPlugin.get(), 0L, 1L);
@@ -252,18 +248,8 @@ public class PowderPlugin extends JavaPlugin {
 		}
 	}
 
-	public static boolean is1_13() {
-		return is1_13;
-	}
-
 	public void loadIntegrations() {
-		// check for Towny and PlotSquared/PlotCubed existence, load if necessary
-		if (this.getServer().getPluginManager().getPlugin("Towny") != null) {
-			info("Located Towny!");
-
-			this.towny = new TownyHandler(config.getInt("towny.maxCreatedTown", 40));
-			getServer().getPluginManager().registerEvents(this.towny, this);
-		}
+		// check for PlotSquared/PlotCubed existence, load if necessary
 
 		if (this.getServer().getPluginManager().getPlugin("PlotSquared") == null) {
 			if (this.getServer().getPluginManager().getPlugin("PlotCubed") != null) {
@@ -278,14 +264,6 @@ public class PowderPlugin extends JavaPlugin {
 			this.plotSquared = new PlotSquaredHandler(config.getInt("plotsquared.maxCreatedPlot", 20));
 			getServer().getPluginManager().registerEvents(this.plotSquared, this);
 		}
-	}
-
-	public TownyHandler getTownyHandler() {
-		return towny;
-	}
-
-	public boolean hasTowny() {
-		return towny != null;
 	}
 
 	public PlotSquaredHandler getPlotSquaredHandler() {

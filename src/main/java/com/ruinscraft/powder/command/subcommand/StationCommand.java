@@ -109,13 +109,6 @@ public class StationCommand implements SubCommand {
 			return;
 		}
 		if (!(player.hasPermission("powder.createany"))) {
-			if (PowderPlugin.get().hasTowny()) {
-				if (!PowderPlugin.get().getTownyHandler().checkLocation(newPowder, player)) {
-					PowderUtil.sendPrefixMessage(player, Message.STATION_TOWNY_NO_PLACE, label,
-							player.getName(), powderName);
-					return;
-				}
-			}
 			if (PowderPlugin.get().hasPlotSquared()) {
 				if (!PowderPlugin.get().getPlotSquaredHandler().checkLocation(newPowder, player)) {
 					PowderUtil.sendPrefixMessage(player, Message.STATION_PLOTSQUARED_NO_PLACE, label,

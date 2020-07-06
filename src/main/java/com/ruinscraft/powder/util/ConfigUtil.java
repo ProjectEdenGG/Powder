@@ -298,19 +298,17 @@ public class ConfigUtil {
 					particle = Particle.NOTE;
 				}
 
-				if (particle == Particle.REDSTONE && PowderPlugin.is1_13()) {
+				if (particle == Particle.REDSTONE) {
 					data = new DustOptions(Color.fromRGB(
 							(int) xOffset,
 							(int) yOffset,
 							(int) zOffset), 1F);
-				} else if (particle == Particle.NOTE && PowderPlugin.is1_13()) {
+				} else if (particle == Particle.NOTE) {
 					xOffset = xOffset * 255 / 10.625 / 24;
 					if (xOffset > (255)) {
 						xOffset -= (255);
 					}
 					data = 1D;
-				} else {
-					data = (Void) null;
 				}
 
 				powder.addPowderParticle(new ModelPowderParticle(character, particle,
@@ -454,11 +452,8 @@ public class ConfigUtil {
 									Particle particle = Particle.valueOf(
 											ParticleName.valueOf(string).getName());
 									Object data = null;
-									if (particle == Particle.REDSTONE
-											&& PowderPlugin.is1_13()) {
+									if (particle == Particle.REDSTONE) {
 										data = new DustOptions(Color.fromRGB(0, 0, 0), 1F);
-									} else {
-										data = (Void) data;
 									}
 									powderParticle = new PositionedPowderParticle(
 											character, particle, x, index, z);
@@ -467,14 +462,11 @@ public class ConfigUtil {
 								}
 							} else {
 								Object data = null;
-								if (model.getParticle() == Particle.REDSTONE
-										&& PowderPlugin.is1_13()) {
+								if (model.getParticle() == Particle.REDSTONE) {
 									data = new DustOptions(Color.fromRGB(
 											(int) model.getXOff(),
 											(int) model.getYOff(),
 											(int) model.getZOff()), 1F);
-								} else {
-									data = (Void) data;
 								}
 								powderParticle = new PositionedPowderParticle(
 										model, x, index, z);
@@ -587,11 +579,17 @@ public class ConfigUtil {
 		FileConfiguration config = null;
 		PowderPlugin instance = PowderPlugin.get();
 		File configFile = new File(instance.getDataFolder(), PLAYER_DATA_FILE);
-		if (configFile.exists()) {
-			config = YamlConfiguration.loadConfiguration(configFile);
-		} else {
-			return null;
+		if (!configFile.exists()) {
+			try {
+				configFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
+
+		config = YamlConfiguration.loadConfiguration(configFile);
+
 		if (config == null) {
 			return null;
 		}
@@ -837,6 +835,7 @@ public class ConfigUtil {
 
 	public static void loadAllAttached(Collection<UUID> uuids) {
 		FileConfiguration playerDataFile = PowderPlugin.get().getPlayerDataFile();
+		if(playerDataFile == null) return;
 
 		for (String uuid : playerDataFile.getKeys(false)) {
 			if (playerDataFile.getConfigurationSection(uuid + ".attached") == null) continue;

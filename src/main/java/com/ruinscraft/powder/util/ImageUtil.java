@@ -125,11 +125,7 @@ public class ImageUtil {
 					arr = 1;
 				}
 
-				Object data = (Void) null;
-				if (PowderPlugin.is1_13()) {
-					data = new DustOptions(
-							org.bukkit.Color.fromRGB(arr, gee, bee), 1F);
-				}
+				Object data = new DustOptions(org.bukkit.Color.fromRGB(arr, gee, bee), 1F);
 
 				PositionedPowderParticle powderParticle = new PositionedPowderParticle(
 						Particle.REDSTONE, 0, arr, gee, bee, data, x + xAdd, y + yAdd, z);

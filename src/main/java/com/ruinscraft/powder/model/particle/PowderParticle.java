@@ -57,7 +57,7 @@ public abstract class PowderParticle implements Cloneable {
 		this.xOff = 0;
 		this.yOff = 0;
 		this.zOff = 0;
-		this.data = (Void) null;
+		this.data = null;
 	}
 
 	public char getCharacter() {

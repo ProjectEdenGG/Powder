@@ -11,7 +11,6 @@ import com.ruinscraft.powder.PowderHandler;
 import com.ruinscraft.powder.PowderPlugin;
 import com.ruinscraft.powder.command.SubCommand;
 import com.ruinscraft.powder.integration.PlotSquaredHandler;
-import com.ruinscraft.powder.integration.TownyHandler;
 import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.util.PowderUtil;
@@ -102,14 +101,6 @@ public class AttachCommand implements SubCommand {
 				if (!plotSquared.checkLocation(newPowder, player)) {
 					PowderUtil.sendPrefixMessage(player, 
 							Message.ATTACH_PLOTSQUARED_NO_PLACE, label, player.getName(), newPowder.getName());
-					return;
-				}
-			}
-			if (PowderPlugin.get().hasTowny()) {
-				TownyHandler towny = PowderPlugin.get().getTownyHandler();
-				if (!towny.checkLocation(newPowder, player)) {
-					PowderUtil.sendPrefixMessage(player, 
-							Message.ATTACH_TOWNY_NO_PLACE, label, player.getName(), newPowder.getName());
 					return;
 				}
 			}

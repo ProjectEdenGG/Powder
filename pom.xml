@@ -48,7 +48,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.13.2-R0.1-SNAPSHOT</version>
+			<version>1.15.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- Bundled with Minecraft -->
@@ -71,13 +71,6 @@
 			<artifactId>NoteBlockAPI</artifactId>
 			<version>1.2.5</version>
 			<scope>compile</scope>
-		</dependency>
-		<!-- TownyHandler -->
-		<dependency>
-			<groupId>com.palmergames.bukkit.towny</groupId>
-			<artifactId>Towny</artifactId>
-			<version>0.95.0.5</version>
-			<scope>provided</scope>
 		</dependency>
 		<!-- PlotSquared (repo is weird) -->
 		<dependency>
