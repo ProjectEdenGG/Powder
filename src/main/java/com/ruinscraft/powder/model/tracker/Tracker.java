@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderPlugin;
-import com.ruinscraft.powder.integration.PlotSquaredHandler;
 
 public interface Tracker {
 
@@ -22,11 +21,6 @@ public interface Tracker {
 
 	default String getFormattedLocation() {
 		Location location = getCurrentLocation();
-		if (PowderPlugin.get().hasPlotSquared()) {
-			PlotSquaredHandler plotsquared = PowderPlugin.get().getPlotSquaredHandler();
-			String formatted = plotsquared.getFormattedLocation(location);
-			if (formatted != null) return formatted;
-		}
 		return (location.getBlockX() + "x " + location.getBlockY() + "y " + location.getBlockZ() + "z");
 	}
 

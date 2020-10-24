@@ -115,13 +115,6 @@ public class StationCommand implements SubCommand {
 			return;
 		}
 		if (!(player.hasPermission("powder.createany"))) {
-			if (PowderPlugin.get().hasPlotSquared()) {
-				if (!PowderPlugin.get().getPlotSquaredHandler().checkLocation(newPowder, player)) {
-					PowderUtil.sendPrefixMessage(player, Message.STATION_PLOTSQUARED_NO_PLACE, label,
-							player.getName(), powderName);
-					return;
-				}
-			}
 			if (PowderPlugin.get().getMaxCreatedPowders() < powderHandler.getPowderTasks(player.getUniqueId()).size()) {
 				int amnt = powderHandler.getPowderTasks(player.getUniqueId()).size();
 				PowderUtil.sendPrefixMessage(player, Message.STATION_TOO_MANY_CREATED, label,

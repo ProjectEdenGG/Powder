@@ -1,7 +1,6 @@
 package com.ruinscraft.powder;
 
 import com.ruinscraft.powder.command.PowderCommand;
-import com.ruinscraft.powder.integration.PlotSquaredHandler;
 import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.storage.JSONStorage;
@@ -38,13 +37,10 @@ public class PowderPlugin extends JavaPlugin {
 	private Storage storage;
 
 	private static boolean isLoading;
-	private static boolean is1_13;
 
 	private boolean asyncMode;
 
 	private int maxCreatedPowders;
-
-	private PlotSquaredHandler plotSquared;
 
 	public static PowderPlugin get() {
 		return instance;
@@ -87,7 +83,6 @@ public class PowderPlugin extends JavaPlugin {
 			return;
 		}
 
-		is1_13 = true; // TODO Check > 1.13
 		config = ConfigUtil.loadConfig();
 		creationTask = new PowdersCreationTask();
 		creationTask.runTaskTimer(PowderPlugin.get(), 0L, 1L);
@@ -112,8 +107,6 @@ public class PowderPlugin extends JavaPlugin {
 		getCommand("powder").setExecutor(powderCommand);
 		getCommand("powder").setTabCompleter(powderCommand);
 		getServer().getPluginManager().registerEvents(new EnvironmentListener(), this);
-
-		loadIntegrations();
 	}
 
 	public synchronized void reload() {
@@ -239,36 +232,6 @@ public class PowderPlugin extends JavaPlugin {
 			BaseComponent baseComponent = PowderUtil.format(PowderUtil.color(actualMessage));
 			messages.put(message, baseComponent);
 		}
-	}
-
-	public static boolean is1_13() {
-		return is1_13;
-	}
-
-	public void loadIntegrations() {
-		// check for PlotSquared/PlotCubed existence, load if necessary
-
-		if (this.getServer().getPluginManager().getPlugin("PlotSquared") == null) {
-			if (this.getServer().getPluginManager().getPlugin("PlotCubed") != null) {
-				info("Located PlotCubed!");
-
-				this.plotSquared = new PlotSquaredHandler(config.getInt("plotsquared.maxCreatedPlot", 20));
-				getServer().getPluginManager().registerEvents(this.plotSquared, this);
-			}
-		} else {
-			info("Found PlotSquared!");
-
-			this.plotSquared = new PlotSquaredHandler(config.getInt("plotsquared.maxCreatedPlot", 20));
-			getServer().getPluginManager().registerEvents(this.plotSquared, this);
-		}
-	}
-
-	public PlotSquaredHandler getPlotSquaredHandler() {
-		return plotSquared;
-	}
-
-	public boolean hasPlotSquared() {
-		return plotSquared != null;
 	}
 
 	public Storage getStorage() {

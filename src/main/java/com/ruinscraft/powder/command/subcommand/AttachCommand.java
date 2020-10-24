@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import com.ruinscraft.powder.PowderHandler;
 import com.ruinscraft.powder.PowderPlugin;
 import com.ruinscraft.powder.command.SubCommand;
-import com.ruinscraft.powder.integration.PlotSquaredHandler;
 import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.util.PowderUtil;
@@ -103,14 +102,6 @@ public class AttachCommand implements SubCommand {
 				return;
 			}
 
-			if (PowderPlugin.get().hasPlotSquared()) {
-				PlotSquaredHandler plotSquared = PowderPlugin.get().getPlotSquaredHandler();
-				if (!plotSquared.checkLocation(newPowder, player)) {
-					PowderUtil.sendPrefixMessage(player, 
-							Message.ATTACH_PLOTSQUARED_NO_PLACE, label, player.getName(), newPowder.getName());
-					return;
-				}
-			}
 			if (PowderPlugin.get().getMaxCreatedPowders() < powderHandler.getPowderTasks(player.getUniqueId()).size()) {
 				PowderUtil.sendPrefixMessage(player, 
 						Message.ATTACH_TOO_MANY_CREATED, label, player.getName(), newPowder.getName());

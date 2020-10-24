@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderPlugin;
-import com.ruinscraft.powder.integration.PlotSquaredHandler;
 
 public class StationaryTracker implements Tracker {
 
@@ -38,14 +37,7 @@ public class StationaryTracker implements Tracker {
 
 	@Override
 	public boolean hasControl(Player possibleOwner) {
-		UUID owner = getCreator();
-		if (owner.equals(possibleOwner.getUniqueId())) return true;
-
-		if (PowderPlugin.get().hasPlotSquared()) {
-			PlotSquaredHandler plotsquared = PowderPlugin.get().getPlotSquaredHandler();
-			return plotsquared.hasPermissionForPowder(possibleOwner.getUniqueId(), getCurrentLocation());
-		}
-		return false;
+		return getCreator().equals(possibleOwner.getUniqueId());
 	}
 
 }
