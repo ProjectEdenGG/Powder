@@ -43,7 +43,6 @@ public class ConfigUtil {
 		instance.reloadConfig();
 		config = instance.getConfig();
 		instance.setConfigVersion(config.getInt("configVersion", 0));
-		instance.setFastMode(config.getBoolean("fastMode", false));
 		instance.setAsyncMode(config.getBoolean("asyncMode", false));
 		instance.setMaxCreatedPowders(config.getInt("maxCreated", 100));
 		checkConfigVersion();
@@ -298,17 +297,19 @@ public class ConfigUtil {
 					particle = Particle.NOTE;
 				}
 
-				if (particle == Particle.REDSTONE) {
+				if (particle == Particle.REDSTONE && PowderPlugin.is1_13()) {
 					data = new DustOptions(Color.fromRGB(
 							(int) xOffset,
 							(int) yOffset,
 							(int) zOffset), 1F);
-				} else if (particle == Particle.NOTE) {
+				} else if (particle == Particle.NOTE && PowderPlugin.is1_13()) {
 					xOffset = xOffset * 255 / 10.625 / 24;
 					if (xOffset > (255)) {
 						xOffset -= (255);
 					}
 					data = 1D;
+				} else {
+					data = (Void) null;
 				}
 
 				powder.addPowderParticle(new ModelPowderParticle(character, particle,
@@ -452,8 +453,11 @@ public class ConfigUtil {
 									Particle particle = Particle.valueOf(
 											ParticleName.valueOf(string).getName());
 									Object data = null;
-									if (particle == Particle.REDSTONE) {
+									if (particle == Particle.REDSTONE
+											&& PowderPlugin.is1_13()) {
 										data = new DustOptions(Color.fromRGB(0, 0, 0), 1F);
+									} else {
+										data = (Void) data;
 									}
 									powderParticle = new PositionedPowderParticle(
 											character, particle, x, index, z);
@@ -462,11 +466,14 @@ public class ConfigUtil {
 								}
 							} else {
 								Object data = null;
-								if (model.getParticle() == Particle.REDSTONE) {
+								if (model.getParticle() == Particle.REDSTONE
+										&& PowderPlugin.is1_13()) {
 									data = new DustOptions(Color.fromRGB(
 											(int) model.getXOff(),
 											(int) model.getYOff(),
 											(int) model.getZOff()), 1F);
+								} else {
+									data = (Void) data;
 								}
 								powderParticle = new PositionedPowderParticle(
 										model, x, index, z);
@@ -579,19 +586,19 @@ public class ConfigUtil {
 		FileConfiguration config = null;
 		PowderPlugin instance = PowderPlugin.get();
 		File configFile = new File(instance.getDataFolder(), PLAYER_DATA_FILE);
-		if (!configFile.exists()) {
+		if (configFile.exists()) {
+			config = YamlConfiguration.loadConfiguration(configFile);
+		} else {
+			return null;
+		}
+		// this statement runs if the playerdata file has never been created
+		if (config == null) {
 			try {
 				configFile.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
-				return null;
 			}
-		}
-
-		config = YamlConfiguration.loadConfiguration(configFile);
-
-		if (config == null) {
-			return null;
+			config = YamlConfiguration.loadConfiguration(configFile);
 		}
 		PowderPlugin.get().setPlayerDataFile(config);
 		Set<PowderTask> powderTasks = loadStationaryPowders();
