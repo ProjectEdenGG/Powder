@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.*;
@@ -37,6 +38,8 @@ public class PowderPlugin extends JavaPlugin {
 	private Storage storage;
 
 	private static boolean isLoading;
+	private static int loadingPercentage;
+	private static boolean is1_13OrAbove;
 
 	private boolean asyncMode;
 
@@ -70,9 +73,16 @@ public class PowderPlugin extends JavaPlugin {
 		try {
 			Class.forName("org.bukkit.entity.Player$Spigot");
 		} catch (ClassNotFoundException e) {
-			warning("Powder requires Spigot! www.spigotmc.org");
+			warning("Powder requires Spigot/Paper! www.spigotmc.org");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
+		}
+
+		is1_13OrAbove = false;
+		String version = Bukkit.getVersion();
+		if (version.contains("1.13") || version.contains("1.14") ||
+				version.contains("1.15") || version.contains("1.16")) { // REALLY bad, find some other solution
+			is1_13OrAbove = true;
 		}
 
 		// NoteBlockAPI
@@ -136,6 +146,10 @@ public class PowderPlugin extends JavaPlugin {
 
 	public static boolean isLoading() {
 		return isLoading;
+	}
+
+	public static int getLoadingPercentage() {
+		return loadingPercentage;
 	}
 
 	public boolean asyncMode() {
@@ -202,13 +216,15 @@ public class PowderPlugin extends JavaPlugin {
 				.loadConfiguration(file);
 
 		YamlConfiguration jarConfig = null;
-		try (Reader jarConfigStream =
-				new InputStreamReader(this.getResource("locale" + File.separator + fileName), "UTF-8")) {
-			jarConfig = YamlConfiguration.loadConfiguration(jarConfigStream);
-			locale.setDefaults(jarConfig);
-			locale.save(file);
-		} catch (Exception e) {
-			e.printStackTrace();
+		InputStream inputStream = this.getResource("locale" + File.separator + fileName);
+		if (inputStream != null) {
+			try (Reader jarConfigStream = new InputStreamReader(inputStream, "UTF-8")) {
+				jarConfig = YamlConfiguration.loadConfiguration(jarConfigStream);
+				locale.setDefaults(jarConfig);
+				locale.save(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		for (Message message : Message.values()) {
@@ -232,6 +248,10 @@ public class PowderPlugin extends JavaPlugin {
 			BaseComponent baseComponent = PowderUtil.format(PowderUtil.color(actualMessage));
 			messages.put(message, baseComponent);
 		}
+	}
+
+	public static boolean is1_13OrAbove() {
+		return is1_13OrAbove;
 	}
 
 	public Storage getStorage() {
@@ -302,13 +322,23 @@ public class PowderPlugin extends JavaPlugin {
 		List<String> powderNames = new ArrayList<>();
 
 		for (FileConfiguration powderConfig : powderConfigs) {
-			for (String s : powderConfig.getConfigurationSection("powders").getKeys(false)) {
+			Set<String> configSection = powderConfig.getConfigurationSection("powders").getKeys(false);
+			int totalSize = configSection.size();
+			int soFar = 0;
+			loadingPercentage = 0;
+			for (String s : configSection) {
+				soFar++;
+				loadingPercentage = (int) (((double) (soFar / totalSize)) * 100);
 				Powder powder = null;
 				try {
 					powder = ConfigUtil.loadPowderFromConfig(powderConfig, s);
 				} catch (Exception e) {
-					warning("Powder '" + s +
-							"' encountered an error and was not loaded:");
+					if (s == null) {
+						warning("An unknown Powder encountered an error and was not loaded:");
+					} else {
+						warning("Powder '" + s +
+								"' encountered an error and was not loaded:");
+					}
 					e.printStackTrace();
 					continue;
 				}

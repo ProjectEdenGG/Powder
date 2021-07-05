@@ -21,6 +21,7 @@ import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.model.PowderTask;
 import com.ruinscraft.powder.util.PowderUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -69,6 +70,8 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 		if (PowderPlugin.isLoading()) {
 			PowderUtil.sendPrefixMessage(player, 
 					Message.GENERAL_LOADING, label, player.getName());
+			PowderUtil.sendPrefixMessage(player,
+					ChatColor.GREEN + "" + PowderPlugin.getLoadingPercentage() + "%", label);
 			return false;
 		}
 
@@ -341,6 +344,12 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 						}
 					}
 				}
+				if (strings.size() == 0) {
+					String[] subCommands = { "loop" };
+					for (String subCommand : subCommands) {
+						if (subCommand.startsWith(args[1].toLowerCase())) strings.add(subCommand);
+					}
+				}
 			}
 		} else if (args.length == 3) {
 			if (args[0].equalsIgnoreCase("arrow")) {
@@ -352,11 +361,21 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 						}
 					}
 				}
+			} else if (args[0].equalsIgnoreCase("station")) {
+				String[] subCommands = { "loop" };
+				for (String subCommand : subCommands) {
+					if (subCommand.startsWith(args[1].toLowerCase())) strings.add(subCommand);
+				}
 			}
 		} else if (args.length == 4) {
 			if (args[0].equalsIgnoreCase("arrow")) {
 				if (args[1].equalsIgnoreCase("hit") || args[1].equalsIgnoreCase("trail")) {
 					strings.add("loop");
+				}
+			} else if (args[0].equalsIgnoreCase("station")) {
+				String[] subCommands = { "loop" };
+				for (String subCommand : subCommands) {
+					if (subCommand.startsWith(args[1].toLowerCase())) strings.add(subCommand);
 				}
 			}
 		} else {

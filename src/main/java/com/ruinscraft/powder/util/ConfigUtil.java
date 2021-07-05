@@ -283,6 +283,7 @@ public class ConfigUtil {
 				double xOffset = powderConfig.getDouble(eachSection + ".xOffset", 0);
 				double yOffset = powderConfig.getDouble(eachSection + ".yOffset", 0);
 				double zOffset = powderConfig.getDouble(eachSection + ".zOffset", 0);
+				float size = (float) powderConfig.getDouble(eachSection + ".size", 1);
 				Object data = null;
 
 				int note = powderConfig.getInt(eachSection + ".note");
@@ -297,19 +298,19 @@ public class ConfigUtil {
 					particle = Particle.NOTE;
 				}
 
-				if (particle == Particle.REDSTONE) {
+				if (particle == Particle.REDSTONE && PowderPlugin.is1_13OrAbove()) {
 					data = new DustOptions(Color.fromRGB(
 							(int) xOffset,
 							(int) yOffset,
-							(int) zOffset), 1F);
-				} else if (particle == Particle.NOTE) {
+							(int) zOffset), size);
+				} else if (particle == Particle.NOTE && PowderPlugin.is1_13OrAbove()) {
 					xOffset = xOffset * 255 / 10.625 / 24;
 					if (xOffset > (255)) {
 						xOffset -= (255);
 					}
 					data = 1D;
 				} else {
-					data = (Void) null;
+					data = (Void) null; // it works!
 				}
 
 				powder.addPowderParticle(new ModelPowderParticle(character, particle,
@@ -398,23 +399,23 @@ public class ConfigUtil {
 								String urlName;
 								int width;
 								int height;
-								int xAdd;
+								int xAdd = 0; // this is basically useless, should remove it
+								float size = 1F;
 								ssss = ssss.replace("img:", "");
 								urlName = ssss.substring(0, ssss.indexOf(";"));
 								ssss = ssss.substring(ssss.indexOf(";") + 1, ssss.length());
-								width = Integer.valueOf(ssss.substring(0, ssss.indexOf(";")));
+								width = Integer.parseInt(ssss.substring(0, ssss.indexOf(";")));
 								ssss = ssss.substring(ssss.indexOf(";") + 1, ssss.length());
 								if (ssss.contains(";")) {
-									height = Integer.valueOf(ssss.substring(0, ssss.indexOf(";")));
+									height = Integer.parseInt(ssss.substring(0, ssss.indexOf(";")));
 									ssss = ssss.substring(ssss.indexOf(";") + 1, ssss.length());
-									xAdd = Integer.valueOf(ssss);
+									size = Float.parseFloat(ssss);
 								} else {
-									height = Integer.valueOf(ssss);
-									xAdd = 0;
+									height = Integer.parseInt(ssss);
 								}
 								try {
 									particleMatrix.addParticles(
-											ImageUtil.getRows(urlName, z, index, xAdd, width, height));
+											ImageUtil.getRows(urlName, z, index, xAdd, width, height, size));
 								} catch (IOException io) {
 									PowderPlugin.warning("Failed to load image: '" + urlName + "'");
 									continue;
@@ -453,7 +454,8 @@ public class ConfigUtil {
 									Particle particle = Particle.valueOf(
 											ParticleName.valueOf(string).getName());
 									Object data = null;
-									if (particle == Particle.REDSTONE) {
+									if (particle == Particle.REDSTONE
+											&& PowderPlugin.is1_13OrAbove()) {
 										data = new DustOptions(Color.fromRGB(0, 0, 0), 1F);
 									} else {
 										data = (Void) data;
@@ -465,7 +467,8 @@ public class ConfigUtil {
 								}
 							} else {
 								Object data = null;
-								if (model.getParticle() == Particle.REDSTONE) {
+								if (model.getParticle() == Particle.REDSTONE
+										&& PowderPlugin.is1_13OrAbove()) {
 									data = new DustOptions(Color.fromRGB(
 											(int) model.getXOff(),
 											(int) model.getYOff(),
