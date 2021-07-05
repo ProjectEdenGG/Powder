@@ -42,17 +42,19 @@ public class PowderHandler {
 		categories = new HashMap<>();
 
 		entitiesToLoad = new HashSet<UUID>();
-		for (World world : Bukkit.getWorlds()) {
-			for (Entity entity : world.getEntities()) {
-				if (entity == null) continue;
-				this.entitiesToLoad.add(entity.getUniqueId());
-			}
-		}
-		PowderPlugin.get().getServer()
-		.getScheduler().runTaskTimer(PowderPlugin.get(), () -> {
+
+		PowderPlugin.get().getServer().getScheduler().runTaskTimer(PowderPlugin.get(), () -> {
 			if (PowderPlugin.isLoading()) {
 				return;
 			}
+
+			for (World world : Bukkit.getWorlds()) {
+				for (Entity entity : world.getEntities()) {
+					if (entity == null) continue;
+					this.entitiesToLoad.add(entity.getUniqueId());
+				}
+			}
+
 			ConfigUtil.loadAllAttached(this.entitiesToLoad);
 			this.entitiesToLoad.clear();
 		}, 0L, 20L);
