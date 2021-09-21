@@ -2,8 +2,10 @@ package com.ruinscraft.powder.model;
 
 import com.ruinscraft.powder.PowdersCreationTask;
 import com.ruinscraft.powder.model.particle.PowderParticle;
+import lombok.Data;
 import org.bukkit.Location;
 
+@Data
 public class Dust implements PowderElement {
 
 	// the PowderParticle associated with this Dust
@@ -13,7 +15,7 @@ public class Dust implements PowderElement {
 	// the mean height of where the Dust should be spawned
 	private double height;
 	// the distance in y value up/down from getHeight() where
-	private double span;
+	private double ySpan;
 	// when to start displaying this Dust
 	private int startTime;
 	// after how many ticks should it repeat?
@@ -30,7 +32,7 @@ public class Dust implements PowderElement {
 		this.powderParticle = dust.getPowderParticle();
 		this.radius = dust.getRadius();
 		this.height = dust.getHeight();
-		this.span = dust.getYSpan();
+		this.ySpan = dust.getYSpan();
 		this.startTime = dust.getStartTime();
 		this.repeatTime = dust.getRepeatTime();
 		this.lockedIterations = dust.getLockedIterations();
@@ -38,36 +40,15 @@ public class Dust implements PowderElement {
 	}
 
 	public Dust(PowderParticle powderParticle, double radius, double height,
-			double span, int startTime, int repeatTime, int lockedIterations) {
+				double ySpan, int startTime, int repeatTime, int lockedIterations) {
 		this.powderParticle = powderParticle;
 		this.radius = radius;
 		this.height = height;
-		this.span = span;
+		this.ySpan = ySpan;
 		this.startTime = startTime;
 		this.repeatTime = repeatTime;
 		this.lockedIterations = lockedIterations;
 		this.iterations = 0;
-	}
-
-	public PowderParticle getPowderParticle() {
-		return powderParticle;
-	}
-
-	public double getRadius() {
-		return radius;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public double getYSpan() {
-		return span;
-	}
-
-	@Override
-	public int getStartTime() {
-		return startTime;
 	}
 
 	@Override
@@ -77,39 +58,9 @@ public class Dust implements PowderElement {
 	}
 
 	@Override
-	public int getRepeatTime() {
-		return repeatTime;
-	}
-
-	@Override
-	public void setRepeatTime(int repeatTime) {
-		this.repeatTime = repeatTime;
-	}
-
-	@Override
-	public int getLockedIterations() {
-		return lockedIterations;
-	}
-
-	@Override
-	public void setLockedIterations(int lockedIterations) {
-		this.lockedIterations = lockedIterations;
-	}
-
-	@Override
-	public int getIterations() {
-		return iterations;
-	}
-
-	@Override
 	public void iterate() {
 		iterations++;
 		this.nextTick = PowdersCreationTask.getCurrentTick() + getRepeatTime();
-	}
-
-	@Override
-	public int getNextTick() {
-		return nextTick;
 	}
 
 	@Override

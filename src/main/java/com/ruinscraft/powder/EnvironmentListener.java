@@ -46,8 +46,7 @@ public class EnvironmentListener implements Listener {
 		if (PowderPlugin.isLoading()) return;
 
 		// put the trail powder on the arrow
-		if (event.getProjectile() == null || !(event.getProjectile() instanceof Projectile)) return;
-		Projectile projectile = (Projectile) event.getProjectile();
+		if (event.getProjectile() == null || !(event.getProjectile() instanceof Projectile projectile)) return;
 
 		PowderTask powderTask = ConfigUtil.loadArrowTrail(projectile, event.getEntity().getUniqueId());
 		if (powderTask == null) return;
@@ -60,9 +59,8 @@ public class EnvironmentListener implements Listener {
 
 		Projectile entity = event.getEntity();
 		if (entity == null) return;
-		if (!(entity.getShooter() instanceof Player)) return;
+		if (!(entity.getShooter() instanceof Player shooter)) return;
 
-		Player shooter = (Player) entity.getShooter();
 		Entity hit = event.getHitEntity();
 		if (hit == null) return;
 

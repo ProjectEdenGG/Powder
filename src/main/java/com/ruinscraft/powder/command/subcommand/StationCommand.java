@@ -3,6 +3,7 @@ package com.ruinscraft.powder.command.subcommand;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderHandler;
@@ -18,16 +19,12 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 
+@Data
 public class StationCommand implements SubCommand {
 
 	private List<Player> recentCommandSenders = new ArrayList<>();
 
 	private String[] labels = {"station"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -54,7 +51,7 @@ public class StationCommand implements SubCommand {
 				PowderPlugin.get().getServer().getScheduler()
 				.scheduleSyncDelayedTask(PowderPlugin.get(), () -> {
 					recentCommandSenders.remove(player);
-				}, (waitTime * 20));
+				}, (waitTime * 20L));
 				recentCommandSenders.add(player);
 			}
 		}
@@ -68,9 +65,8 @@ public class StationCommand implements SubCommand {
 
 			int page = 1;
 			try {
-				page = Integer.valueOf(args[1]);
-			} catch (Exception ee) {
-				page = 1;
+				page = Integer.parseInt(args[1]);
+			} catch (Exception ignored) {
 			}
 
 			List<PowderTask> stationed = powderHandler.getStationaryPowderTasks(player);

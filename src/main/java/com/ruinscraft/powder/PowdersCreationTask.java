@@ -33,13 +33,10 @@ public class PowdersCreationTask extends BukkitRunnable {
 
 		refreshLocations(powderHandler);
 
-		if (PowderPlugin.get().asyncMode()) {
-			CompletableFuture.runAsync(() -> {
-				createElements(powderHandler);
-			});
-		} else {
+		if (PowderPlugin.get().asyncMode())
+			CompletableFuture.runAsync(() -> createElements(powderHandler));
+		else
 			createElements(powderHandler);
-		}
 	}
 
 	public void createElements(PowderHandler powderHandler) {

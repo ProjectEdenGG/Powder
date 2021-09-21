@@ -129,17 +129,14 @@ public class ConfigUtil {
 			for (String s : config.getConfigurationSection("categories").getKeys(false)) {
 				powderHandler.addCategory(s, config.getString("categories." + s + ".desc", ""));
 			}
-			if (!powderHandler.getCategories().keySet().contains("Other")) {
+			if (!powderHandler.getCategories().containsKey("Other")) {
 				powderHandler.addCategory("Other", "Unsorted Powders");
 			}
 		}
 	}
 
 	public static boolean configContainsPowder(FileConfiguration config, String path) {
-		if (config.getString("powders." + path + ".name") != null) {
-			return true;
-		}
-		return false;
+		return config.getString("powders." + path + ".name") != null;
 	}
 
 	public static Powder loadPowderFromConfig(String path) {
@@ -213,7 +210,7 @@ public class ConfigUtil {
 		if (powderHandler.categoriesEnabled()) {
 			for (String t : (List<String>) powderConfig
 					.getList(section + ".categories", new ArrayList<String>())) {
-				if (!(powderHandler.getCategories().keySet().contains(t))) {
+				if (!(powderHandler.getCategories().containsKey(t))) {
 					PowderPlugin.warning("Invalid category '" + t +
 							"' for '" + powder.getName() + "' in " + powderConfig.getName());
 					continue;
@@ -342,8 +339,7 @@ public class ConfigUtil {
 							"BLOCK_NOTE_HARP");
 					noteName = com.xxmicloxx.NoteBlockAPI.model.Sound.getFromBukkitName(noteName).name();
 					for (PowderElement powderElement : powder.getPowderElements()) {
-						if (powderElement instanceof SoundEffect) {
-							SoundEffect soundEffect = (SoundEffect) powderElement;
+						if (powderElement instanceof SoundEffect soundEffect) {
 							if (soundEffect.getSound().name().equals(noteName)) {
 								addedPowderElements.add(new Dust(powderParticle, radius, height, span,
 										soundEffect.getStartTime(), soundEffect.getRepeatTime(),
@@ -553,14 +549,11 @@ public class ConfigUtil {
 
 	public static boolean containsTask(PowderTask powderTask) {
 		FileConfiguration config = PowderPlugin.get().getPlayerDataFile();
-		if (config == null) {
+		if (config == null)
 			return false;
-		}
-		if (config.getConfigurationSection(powderTask.getTracker().getCreator() + ".stationary."
-				+ PowderUtil.cleanPowderTaskName(powderTask)) == null) {
-			return false;
-		}
-		return true;
+
+		return config.getConfigurationSection(powderTask.getTracker().getCreator() + ".stationary."
+			+ PowderUtil.cleanPowderTaskName(powderTask)) != null;
 	}
 
 	public static FileConfiguration loadPlayerDataFile() {
@@ -689,10 +682,8 @@ public class ConfigUtil {
 		float pitch = (float) config.getDouble(newSection + ".pitch");
 		Location location = new Location(world, x, y, z, yaw, pitch);
 
-		PowderTask powderTask = new PowderTask(config.getString(section + ".name"), 
+		return new PowderTask(config.getString(section + ".name"),
 				powder, new StationaryTracker(location, uuid));
-
-		return powderTask;
 	}
 
 	public static void removeStationaryPowder(PowderTask powderTask) {

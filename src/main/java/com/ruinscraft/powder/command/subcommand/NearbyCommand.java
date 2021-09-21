@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Data;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderHandler;
@@ -18,14 +19,10 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 
+@Data
 public class NearbyCommand implements SubCommand {
 
 	private String[] labels = {"nearby", "near", "nearme"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -42,9 +39,9 @@ public class NearbyCommand implements SubCommand {
 		int range = 200;
 		int page = 1;
 		try {
-			range = Integer.valueOf(args[1]);
-			page = Integer.valueOf(args[2]);
-		} catch (Exception e) { }
+			range = Integer.parseInt(args[1]);
+			page = Integer.parseInt(args[2]);
+		} catch (Exception ignored) { }
 
 		PowderUtil.sendPrefixMessage(player, Message.NEARBY_PREFIX, label);
 		Map<PowderTask, Integer> nearby =
@@ -53,9 +50,8 @@ public class NearbyCommand implements SubCommand {
 		for (PowderTask powderTask : nearby.keySet()) {
 			BaseComponent baseComponent = PowderUtil.setText(Message.NEARBY,
 					powderTask.getName(), String.valueOf(nearby.get(powderTask)));
-			boolean hasPermissionForPowder = false;
-			if (powderTask.getTracker().hasControl(player)) hasPermissionForPowder = true;
-			if (player.hasPermission("powder.removeany") || 
+			boolean hasPermissionForPowder = powderTask.getTracker().hasControl(player);
+			if (player.hasPermission("powder.removeany") ||
 					(player.hasPermission("powder.remove") && hasPermissionForPowder)) {
 				baseComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
 						new ComponentBuilder(PowderUtil.setString(

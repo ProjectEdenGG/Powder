@@ -6,7 +6,9 @@ import com.ruinscraft.powder.PowderPlugin;
 import com.ruinscraft.powder.model.tracker.EntityTracker;
 import com.ruinscraft.powder.model.tracker.Tracker;
 import com.ruinscraft.powder.util.ConfigUtil;
+import lombok.Data;
 
+@Data
 public class PowderTask {
 
 	// name associated with this PowderTask (null if no player)
@@ -35,22 +37,9 @@ public class PowderTask {
 		return null;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
-		ConfigUtil.saveStationaryPowder(
-				PowderPlugin.get().getPlayerDataFile(), this);
-	}
-
-	public Tracker getTracker() {
-		return tracker;
-	}
-
-	public Powder getPowder() {
-		return powder;
+		ConfigUtil.saveStationaryPowder(PowderPlugin.get().getPlayerDataFile(), this);
 	}
 
 	public boolean hasAnyElements() {

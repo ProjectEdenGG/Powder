@@ -20,6 +20,7 @@ import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.model.PowderTask;
 import com.ruinscraft.powder.util.PowderUtil;
+import lombok.Data;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -30,6 +31,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+@Data
 public class PowderCommand implements CommandExecutor, TabCompleter {
 
 	private List<Player> recentCommandSenders = new ArrayList<>();
@@ -43,7 +45,7 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		// if console
-		if (!(sender instanceof Player)) {
+		if (!(sender instanceof Player player)) {
 			try {
 				if (args[0].equals("reload")) {
 					// reload
@@ -64,8 +66,6 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 			}
 			return true;
 		}
-
-		Player player = (Player) sender;
 
 		if (PowderPlugin.isLoading()) {
 			PowderUtil.sendPrefixMessage(player, 
@@ -245,7 +245,7 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 			PowderPlugin.get().getServer().getScheduler()
 			.scheduleSyncDelayedTask(PowderPlugin.get(), () -> {
 				recentCommandSenders.remove(player);
-			}, (waitTime * 20));
+			}, (waitTime * 20L));
 			recentCommandSenders.add(player);
 		}
 
@@ -270,8 +270,7 @@ public class PowderCommand implements CommandExecutor, TabCompleter {
 
 		if (PowderPlugin.isLoading()) return strings;
 
-		if (!(sender instanceof Player)) return strings;
-		Player player = (Player) sender;
+		if (!(sender instanceof Player player)) return strings;
 
 		if (args.length == 1) {
 			for (SubCommand subCommand : this.subCommands) {

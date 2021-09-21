@@ -2,6 +2,7 @@ package com.ruinscraft.powder.command.subcommand;
 
 import java.util.Set;
 
+import lombok.Data;
 import org.bukkit.entity.Player;
 
 import com.google.common.collect.Iterables;
@@ -12,14 +13,10 @@ import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.PowderTask;
 import com.ruinscraft.powder.util.PowderUtil;
 
+@Data
 public class CancelCommand implements SubCommand {
 
 	private String[] labels = {"cancel"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {

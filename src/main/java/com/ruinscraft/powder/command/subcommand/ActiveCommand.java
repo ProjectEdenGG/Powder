@@ -3,6 +3,7 @@ package com.ruinscraft.powder.command.subcommand;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderHandler;
@@ -14,14 +15,10 @@ import com.ruinscraft.powder.util.PowderUtil;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 
+@Data
 public class ActiveCommand implements SubCommand {
 
-	private String[] labels = {"active"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
+	private final String[] labels = {"active"};
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -31,7 +28,7 @@ public class ActiveCommand implements SubCommand {
 				Message.ACTIVE_PREFIX, label, player.getName());
 		int page;
 		try {
-			page = Integer.valueOf(args[1]);
+			page = Integer.parseInt(args[1]);
 		} catch (Exception e) {
 			page = 1;
 		}

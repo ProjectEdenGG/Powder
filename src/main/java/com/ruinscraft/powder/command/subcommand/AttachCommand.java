@@ -3,6 +3,7 @@ package com.ruinscraft.powder.command.subcommand;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,16 +15,12 @@ import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.util.PowderUtil;
 
+@Data
 public class AttachCommand implements SubCommand {
 
 	private List<Player> recentCommandSenders = new ArrayList<>();
 
 	private String[] labels = {"attach"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -49,9 +46,7 @@ public class AttachCommand implements SubCommand {
 			if (waitTime > 0) {
 				// add user to this list of recent command senders for the given amount of time
 				PowderPlugin.get().getServer().getScheduler()
-				.scheduleSyncDelayedTask(PowderPlugin.get(), () -> {
-					recentCommandSenders.remove(player);
-				}, (waitTime * 20));
+				.scheduleSyncDelayedTask(PowderPlugin.get(), () -> recentCommandSenders.remove(player), (waitTime * 20L));
 				recentCommandSenders.add(player);
 			}
 		}
@@ -71,7 +66,7 @@ public class AttachCommand implements SubCommand {
 		try {
 			String loopString = args[2];
 			if (loopString.equalsIgnoreCase("loop")) loop = true;
-		} catch (Exception e) { }
+		} catch (Exception ignored) { }
 
 		if (newPowder == null) {
 			PowderUtil.sendPrefixMessage(player,
@@ -114,8 +109,7 @@ public class AttachCommand implements SubCommand {
 			PowderUtil.sendPrefixMessage(player, Message.ATTACH_SUCCESS_PLAYER,
 					label, player.getName(), powderName, entity.getName());
 			return;
-		} else if (entity instanceof LivingEntity) {
-			LivingEntity livingEntity = (LivingEntity) entity;
+		} else if (entity instanceof LivingEntity livingEntity) {
 			livingEntity.setRemoveWhenFarAway(false);
 			newPowder.spawn(livingEntity, player);
 		} else {

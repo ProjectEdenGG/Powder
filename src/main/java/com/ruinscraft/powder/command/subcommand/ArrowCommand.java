@@ -1,5 +1,6 @@
 package com.ruinscraft.powder.command.subcommand;
 
+import lombok.Data;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderPlugin;
@@ -9,14 +10,10 @@ import com.ruinscraft.powder.model.Powder;
 import com.ruinscraft.powder.util.ConfigUtil;
 import com.ruinscraft.powder.util.PowderUtil;
 
+@Data
 public class ArrowCommand implements SubCommand {
 
 	private String[] labels = {"arrow"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -59,7 +56,7 @@ public class ArrowCommand implements SubCommand {
 		}
 
 		if (args.length >= 4) {
-			if (args[3].toLowerCase().equals("loop")) powder = powder.loop();
+			if (args[3].equalsIgnoreCase("loop")) powder = powder.loop();
 		}
 
 		// if no permission for the specific Powder
@@ -80,7 +77,6 @@ public class ArrowCommand implements SubCommand {
 		} else {
 			PowderUtil.sendPrefixMessage(player,
 					Message.ARROW_SYNTAX, label, player.getName(), label);
-			return;
 		}
 	}
 

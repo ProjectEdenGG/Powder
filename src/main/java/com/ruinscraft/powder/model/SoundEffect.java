@@ -1,11 +1,13 @@
 package com.ruinscraft.powder.model;
 
 import com.ruinscraft.powder.PowdersCreationTask;
+import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
 
+@Data
 public class SoundEffect implements PowderElement {
 
 	// Sound enum associated with this SoundEffect
@@ -33,7 +35,7 @@ public class SoundEffect implements PowderElement {
 		this.sound = soundEffect.getSound();
 		this.volume = soundEffect.getVolume();
 		this.pitch = soundEffect.getPitch();
-		this.surroundSound = soundEffect.surroundSound();
+		this.surroundSound = soundEffect.isSurroundSound();
 		this.startTime = soundEffect.getStartTime();
 		this.repeatTime = soundEffect.getRepeatTime();
 		this.lockedIterations = soundEffect.getLockedIterations();
@@ -52,31 +54,6 @@ public class SoundEffect implements PowderElement {
 		this.iterations = 0;
 	}
 
-	public Sound getSound() {
-		return sound;
-	}
-
-	public double getVolume() {
-		return volume;
-	}
-
-	public void setVolume(double volume) {
-		this.volume = volume;
-	}
-
-	public double getPitch() {
-		return pitch;
-	}
-
-	public boolean surroundSound() {
-		return surroundSound;
-	}
-
-	@Override
-	public int getStartTime() {
-		return startTime;
-	}
-
 	@Override
 	public void setStartTime(int startTime) {
 		this.startTime = startTime;
@@ -84,39 +61,9 @@ public class SoundEffect implements PowderElement {
 	}
 
 	@Override
-	public int getRepeatTime() {
-		return repeatTime;
-	}
-
-	@Override
-	public void setRepeatTime(int repeatTime) {
-		this.repeatTime = repeatTime;
-	}
-
-	@Override
-	public int getLockedIterations() {
-		return lockedIterations;
-	}
-
-	@Override
-	public void setLockedIterations(int lockedIterations) {
-		this.lockedIterations = lockedIterations;
-	}
-
-	@Override
-	public int getIterations() {
-		return iterations;
-	}
-
-	@Override
 	public void iterate() {
 		iterations++;
 		this.nextTick = PowdersCreationTask.getCurrentTick() + getRepeatTime();
-	}
-
-	@Override
-	public int getNextTick() {
-		return nextTick;
 	}
 
 	@Override

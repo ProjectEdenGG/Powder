@@ -1,5 +1,9 @@
 package com.ruinscraft.powder.model;
 
+import lombok.Data;
+import lombok.Getter;
+
+@Getter
 public enum Message {
 
 	/*/
@@ -146,11 +150,7 @@ public enum Message {
 	LIST_CATEGORY_REGULAR_HOVER("{command}", "{category}", "{desc}"),
 	LIST_CATEGORY_REGULAR_CLICK("{command}", "{category}", "{desc}");
 
-	private String[] placeholders;
-
-	public String[] getPlaceholders() {
-		return placeholders;
-	}
+	private final String[] placeholders;
 
 	private Message(String... placeholders) {
 		this.placeholders = placeholders;

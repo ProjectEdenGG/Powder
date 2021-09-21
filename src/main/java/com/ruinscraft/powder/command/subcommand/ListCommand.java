@@ -1,5 +1,6 @@
 package com.ruinscraft.powder.command.subcommand;
 
+import lombok.Data;
 import org.bukkit.entity.Player;
 
 import com.ruinscraft.powder.PowderHandler;
@@ -7,14 +8,10 @@ import com.ruinscraft.powder.PowderPlugin;
 import com.ruinscraft.powder.command.SubCommand;
 import com.ruinscraft.powder.util.PowderUtil;
 
+@Data
 public class ListCommand implements SubCommand {
 
 	private String[] labels = {"list"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -25,7 +22,7 @@ public class ListCommand implements SubCommand {
 
 		int page;
 		try {
-			page = Integer.valueOf(args[1]);
+			page = Integer.parseInt(args[1]);
 		} catch (Exception e) {
 			page = 1;
 		}

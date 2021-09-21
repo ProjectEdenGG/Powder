@@ -9,6 +9,7 @@ import com.ruinscraft.powder.storage.SQLiteStorage;
 import com.ruinscraft.powder.storage.Storage;
 import com.ruinscraft.powder.util.ConfigUtil;
 import com.ruinscraft.powder.util.PowderUtil;
+import lombok.Data;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -349,7 +350,7 @@ public class PowderPlugin extends JavaPlugin {
 			if (powderNames.get(powderNames.size() - 1).equals(powderName)) {
 				msg.append(powderName);
 			} else {
-				msg.append(powderName + ", ");
+				msg.append(powderName).append(", ");
 			}
 		}
 		if (config.getBoolean("listOfLoadedPowders", true)) {

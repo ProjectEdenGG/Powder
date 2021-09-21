@@ -1,5 +1,6 @@
 package com.ruinscraft.powder.command.subcommand;
 
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -10,14 +11,10 @@ import com.ruinscraft.powder.model.Message;
 import com.ruinscraft.powder.model.PowderTask;
 import com.ruinscraft.powder.util.PowderUtil;
 
+@Data
 public class RemoveCommand implements SubCommand {
 
 	private String[] labels = {"remove"};
-
-	@Override
-	public String[] getLabels() {
-		return labels;
-	}
 
 	@Override
 	public void command(Player player, String label, String[] args) {
@@ -63,9 +60,7 @@ public class RemoveCommand implements SubCommand {
 			} else {
 				PowderUtil.sendPrefixMessage(player, Message.REMOVE_USER_REMOVE_FAILURE,
 						label, player.getName(), powderUser.getName());
-				return;
 			}
-			return;
 		} else {
 			String name;
 			try {
@@ -96,9 +91,7 @@ public class RemoveCommand implements SubCommand {
 			} else {
 				PowderUtil.sendPrefixMessage(player, Message.REMOVE_NO_USER_FAILURE,
 						label, player.getName(), name);
-				return;
 			}
-			return;
 		}
 	}
 

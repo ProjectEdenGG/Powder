@@ -4,9 +4,9 @@ import org.bukkit.Particle;
 
 public class PositionedPowderParticle extends PowderParticle {
 
-	private int x;
-	private int y;
-	private int z;
+	private final int x;
+	private final int y;
+	private final int z;
 
 	public PositionedPowderParticle(PowderParticle particle, int x, int y, int z) {
 		super(particle);

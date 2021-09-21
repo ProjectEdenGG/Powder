@@ -7,6 +7,7 @@ import com.ruinscraft.powder.model.particle.PowderParticle;
 import com.ruinscraft.powder.model.tracker.EntityTracker;
 import com.ruinscraft.powder.model.tracker.StationaryTracker;
 import com.ruinscraft.powder.util.PowderUtil;
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -18,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 public class Powder implements Cloneable {
 
 	// name of the Powder
@@ -84,88 +86,12 @@ public class Powder implements Cloneable {
 		hidden = powder.isHidden();
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public List<String> getCategories() {
-		return categories;
-	}
-
 	public void addCategory(String category) {
 		categories.add(category);
 	}
 
-	public double getDefaultSpacing() {
-		return defaultSpacing;
-	}
-
-	public void setDefaultSpacing(double defaultSpacing) {
-		this.defaultSpacing = defaultSpacing;
-	}
-
-	public int getDefaultStartTime() {
-		return defaultStartTime;
-	}
-
-	public void setDefaultStartTime(int defaultStartTime) {
-		this.defaultStartTime = defaultStartTime;
-	}
-
-	public int getDefaultRepeatTime() {
-		return defaultRepeatTime;
-	}
-
-	public void setDefaultRepeatTime(int defaultRepeatTime) {
-		this.defaultRepeatTime = defaultRepeatTime;
-	}
-
-	public int getDefaultLockedIterations() {
-		return defaultLockedIterations;
-	}
-
-	public void setDefaultLockedIterations(int defaultLockedIterations) {
-		this.defaultLockedIterations = defaultLockedIterations;
-	}
-
-	public double getDefaultAddedPitch() {
-		return defaultAddedPitch;
-	}
-
-	public void setDefaultAddedPitch(double defaultAddedPitch) {
-		this.defaultAddedPitch = defaultAddedPitch;
-	}
-
-	public double getDefaultAddedRotation() {
-		return defaultAddedRotation;
-	}
-
-	public void setDefaultAddedRotation(double defaultAddedRotation) {
-		this.defaultAddedRotation = defaultAddedRotation;
-	}
-
-	public double getDefaultAddedTilt() {
-		return defaultAddedTilt;
-	}
-
-	public void setDefaultAddedTilt(double defaultAddedTilt) {
-		this.defaultAddedTilt = defaultAddedTilt;
-	}
-
 	public boolean hasPowderElements() {
 		return powderElements.size() != 0;
-	}
-
-	public List<PowderElement> getPowderElements() {
-		return powderElements;
 	}
 
 	public List<PowderElement> getClonedPowderElements() {
@@ -218,36 +144,8 @@ public class Powder implements Cloneable {
 		return null;
 	}
 
-	public void setPowderParticles(List<PowderParticle> powderParticles) {
-		this.powderParticles = powderParticles;
-	}
-
 	public void addPowderParticle(PowderParticle powderParticle) {
 		powderParticles.add(powderParticle);
-	}
-
-	public boolean isHidden() {
-		return hidden;
-	}
-
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
-	}
-
-	public int getDefaultLeft() {
-		return defaultLeft;
-	}
-
-	public void setDefaultLeft(int defaultLeft) {
-		this.defaultLeft = defaultLeft;
-	}
-
-	public int getDefaultUp() {
-		return defaultUp;
-	}
-
-	public void setDefaultUp(int defaultUp) {
-		this.defaultUp = defaultUp;
 	}
 
 	public boolean hasMovement() {

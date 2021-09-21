@@ -24,16 +24,16 @@ public class PowderHandler {
 	// list of all Powders on the server
 	private List<Powder> powders;
 	// set of current PowderTasks being handled
-	private List<PowderTask> powderTasks;
+	private final List<PowderTask> powderTasks;
 	// map of categories and their descriptions
-	private Map<String, String> categories;
+	private final Map<String, String> categories;
 	// are categories enabled?
 	private boolean categoriesEnabled;
 
 	// every second, all entities loaded with chunk loading are
 	// checked to see if they have powders attached to them;
 	// they are created if so
-	private Set<UUID> entitiesToLoad;
+	private final Set<UUID> entitiesToLoad;
 
 	// initialize
 	public PowderHandler() {
@@ -139,8 +139,7 @@ public class PowderHandler {
 	}
 
 	public List<PowderTask> getCreatedPowderTasks(UUID uuid) {
-		List<PowderTask> powderTasks = new ArrayList<>();
-		powderTasks.addAll(this.getStationaryPowderTasks(uuid));
+		List<PowderTask> powderTasks = new ArrayList<>(this.getStationaryPowderTasks(uuid));
 
 		for (PowderTask powderTask : this.getPowderTasks()) {
 			if (powderTask.getTracker().getType() == Tracker.Type.ENTITY) {
@@ -200,10 +199,8 @@ public class PowderHandler {
 
 	// gets all users who have a running PowderTask
 	public Set<UUID> getAllPowderTaskUUIDs() {
-		Set<UUID> uuids = new HashSet<>();
-		uuids.addAll(getCurrentEntityTracks().values().stream()
-				.map(EntityTracker::getUUID).collect(Collectors.toSet()));
-		return uuids;
+		return getCurrentEntityTracks().values().stream()
+			.map(EntityTracker::getUUID).collect(Collectors.toSet());
 	}
 
 	public PowderTask getPowderTask(String name) {

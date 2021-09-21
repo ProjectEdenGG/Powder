@@ -141,10 +141,6 @@ public class ParticleMatrix implements PowderElement {
 		return !particles.isEmpty();
 	}
 
-	public Set<PositionedPowderParticle> getParticles() {
-		return particles;
-	}
-
 	public PositionedPowderParticle getParticleAtLocation(int x, int y, int z) {
 		for (PositionedPowderParticle particle : particles) {
 			if (particle.getX() == x && particle.getY() == y && particle.getZ() == z) {

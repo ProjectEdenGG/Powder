@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 
 public interface SubCommand {
 
-	public String[] getLabels();
+	String[] getLabels();
 
-	public void command(Player player, String label, String[] args);
+	void command(Player player, String label, String[] args);
 
 }
