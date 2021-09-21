@@ -119,21 +119,18 @@ public class ImageUtil {
 				}
 
 				Color color = new Color(pixel);
-				int arr = color.getRed();
-				int gee = color.getGreen();
-				int bee = color.getBlue();
-				if (arr == 0) {
-					arr = 1;
+				int r = color.getRed();
+				int g = color.getGreen();
+				int b = color.getBlue();
+				if (r == 0) {
+					r = 1;
 				}
 
-				Object data = (Void) null; // this line is funny
-				if (PowderPlugin.is1_13OrAbove()) {
-					data = new DustOptions(
-							org.bukkit.Color.fromRGB(arr, gee, bee), particleSize);
-				}
+				Object data = new DustOptions(
+						org.bukkit.Color.fromRGB(r, g, b), particleSize);
 
 				PositionedPowderParticle powderParticle = new PositionedPowderParticle(
-						Particle.REDSTONE, 0, arr, gee, bee, data, x + xAdd, y + yAdd, z);
+						Particle.REDSTONE, 0, r, g, b, data, x + xAdd, y + yAdd, z);
 				particles.add(powderParticle);
 			}
 		}

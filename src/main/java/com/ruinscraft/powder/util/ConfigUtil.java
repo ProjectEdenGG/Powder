@@ -298,12 +298,12 @@ public class ConfigUtil {
 					particle = Particle.NOTE;
 				}
 
-				if (particle == Particle.REDSTONE && PowderPlugin.is1_13OrAbove()) {
+				if (particle == Particle.REDSTONE) {
 					data = new DustOptions(Color.fromRGB(
 							(int) xOffset,
 							(int) yOffset,
 							(int) zOffset), size);
-				} else if (particle == Particle.NOTE && PowderPlugin.is1_13OrAbove()) {
+				} else if (particle == Particle.NOTE) {
 					xOffset = xOffset * 255 / 10.625 / 24;
 					if (xOffset > (255)) {
 						xOffset -= (255);
@@ -453,29 +453,17 @@ public class ConfigUtil {
 									String string = String.valueOf(character);
 									Particle particle = Particle.valueOf(
 											ParticleName.valueOf(string).getName());
-									Object data = null;
-									if (particle == Particle.REDSTONE
-											&& PowderPlugin.is1_13OrAbove()) {
-										data = new DustOptions(Color.fromRGB(0, 0, 0), 1F);
-									} else {
-										data = (Void) data;
-									}
+									Object data = new DustOptions(Color.fromRGB(0, 0, 0), 1F);
 									powderParticle = new PositionedPowderParticle(
 											character, particle, x, index, z);
 								} catch (Exception e) {
 									continue;
 								}
 							} else {
-								Object data = null;
-								if (model.getParticle() == Particle.REDSTONE
-										&& PowderPlugin.is1_13OrAbove()) {
-									data = new DustOptions(Color.fromRGB(
+								Object data = new DustOptions(Color.fromRGB(
 											(int) model.getXOff(),
 											(int) model.getYOff(),
 											(int) model.getZOff()), 1F);
-								} else {
-									data = (Void) data;
-								}
 								powderParticle = new PositionedPowderParticle(
 										model, x, index, z);
 							}

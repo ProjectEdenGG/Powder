@@ -43,7 +43,7 @@ public class PowderHandler {
 
 		entitiesToLoad = new HashSet<UUID>();
 
-		PowderPlugin.get().getServer().getScheduler().runTaskTimer(PowderPlugin.get(), () -> {
+		PowderPlugin.get().getServer().getScheduler().scheduleSyncRepeatingTask(PowderPlugin.get(), () -> {
 			if (PowderPlugin.isLoading()) {
 				return;
 			}

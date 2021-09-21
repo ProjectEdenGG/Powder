@@ -39,7 +39,6 @@ public class PowderPlugin extends JavaPlugin {
 
 	private static boolean isLoading;
 	private static int loadingPercentage;
-	private static boolean is1_13OrAbove;
 
 	private boolean asyncMode;
 
@@ -76,13 +75,6 @@ public class PowderPlugin extends JavaPlugin {
 			warning("Powder requires Spigot/Paper! www.spigotmc.org");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
-		}
-
-		is1_13OrAbove = false;
-		String version = Bukkit.getVersion();
-		if (version.contains("1.13") || version.contains("1.14") ||
-				version.contains("1.15") || version.contains("1.16")) { // REALLY bad, find some other solution
-			is1_13OrAbove = true;
 		}
 
 		// NoteBlockAPI
@@ -248,10 +240,6 @@ public class PowderPlugin extends JavaPlugin {
 			BaseComponent baseComponent = PowderUtil.format(PowderUtil.color(actualMessage));
 			messages.put(message, baseComponent);
 		}
-	}
-
-	public static boolean is1_13OrAbove() {
-		return is1_13OrAbove;
 	}
 
 	public Storage getStorage() {
