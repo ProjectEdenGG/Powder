@@ -1,5 +1,11 @@
 package com.ruinscraft.powder.model.particle;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.bukkit.Particle;
+
+@Getter
+@AllArgsConstructor
 public enum ParticleName {
 
 	// default enums associated with each character used in Dust and ParticleMatrix
@@ -56,14 +62,10 @@ public enum ParticleName {
 	y(""),
 	z("");
 
-	private String name;
+	private final String name;
 
-	ParticleName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
+	public Particle getParticle() {
+		return Particle.valueOf(getName());
 	}
 
 }

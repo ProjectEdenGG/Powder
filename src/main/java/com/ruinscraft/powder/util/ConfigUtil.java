@@ -327,8 +327,7 @@ public class ConfigUtil {
 				PowderParticle powderParticle = powder.getPowderParticle(character);
 				if (powderParticle == null) {
 					try {
-						Particle particle = Particle.valueOf(
-								ParticleName.valueOf(dustName).getName());
+						Particle particle = ParticleName.valueOf(dustName).getParticle();
 						powderParticle = new ModelPowderParticle(character, particle);
 					} catch (Exception e) {
 						continue;
@@ -370,7 +369,7 @@ public class ConfigUtil {
 				ParticleMatrix particleMatrix = new ParticleMatrix();
 				particleMatrix.setSpacing(powderConfig.getDouble(
 						eachSection + ".spacing", powder.getDefaultSpacing()));
-				particleMatrix.setIfPitch(powderConfig.getBoolean(
+				particleMatrix.hasPitch(powderConfig.getBoolean(
 						eachSection + ".hasPitch", false));
 				particleMatrix.setAddedPitch(powderConfig.getDouble(
 						eachSection + ".addedPitch", 0));
@@ -451,21 +450,14 @@ public class ConfigUtil {
 							if (model == null) {
 								try {
 									String string = String.valueOf(character);
-									Particle particle = Particle.valueOf(
-											ParticleName.valueOf(string).getName());
-									Object data = new DustOptions(Color.fromRGB(0, 0, 0), 1F);
+									Particle particle = ParticleName.valueOf(string).getParticle();
 									powderParticle = new PositionedPowderParticle(
 											character, particle, x, index, z);
 								} catch (Exception e) {
 									continue;
 								}
 							} else {
-								Object data = new DustOptions(Color.fromRGB(
-											(int) model.getXOff(),
-											(int) model.getYOff(),
-											(int) model.getZOff()), 1F);
-								powderParticle = new PositionedPowderParticle(
-										model, x, index, z);
+								powderParticle = new PositionedPowderParticle(model, x, index, z);
 							}
 							particleMatrix.addParticle(powderParticle);
 						}

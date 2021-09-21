@@ -720,7 +720,7 @@ public class PowderUtil {
 		newMatrix.setAddedPitch(matrix.getAddedPitch());
 		newMatrix.setAddedRotation(matrix.getAddedRotation());
 		newMatrix.setAddedTilt(matrix.getAddedTilt());
-		newMatrix.setIfPitch(matrix.hasPitch());
+		newMatrix.hasPitch(matrix.hasPitch());
 		newMatrix.setPlayerLeft(matrix.getPlayerLeft());
 		newMatrix.setPlayerUp(matrix.getPlayerUp());
 		newMatrix.setStartTime(newStartTime);
@@ -1525,7 +1525,7 @@ public class PowderUtil {
 					newMatrix.setAddedPitch(matrix.getAddedPitch());
 					newMatrix.setAddedRotation(matrix.getAddedRotation() + rotation);
 					newMatrix.setAddedTilt(matrix.getAddedTilt());
-					newMatrix.setIfPitch(matrix.hasPitch());
+					newMatrix.hasPitch(matrix.hasPitch());
 					newMatrix.setPlayerLeft(matrix.getPlayerLeft());
 					newMatrix.setPlayerUp(matrix.getPlayerUp());
 					newMatrix.setStartTime(matrix.getStartTime());
@@ -1579,7 +1579,7 @@ public class PowderUtil {
 					newMatrix.setAddedPitch(matrix.getAddedPitch() + pitch);
 					newMatrix.setAddedRotation(matrix.getAddedRotation());
 					newMatrix.setAddedTilt(matrix.getAddedTilt());
-					newMatrix.setIfPitch(matrix.hasPitch());
+					newMatrix.hasPitch(matrix.hasPitch());
 					newMatrix.setPlayerLeft(matrix.getPlayerLeft());
 					newMatrix.setPlayerUp(matrix.getPlayerUp());
 					newMatrix.setStartTime(matrix.getStartTime());
@@ -1633,7 +1633,7 @@ public class PowderUtil {
 					newMatrix.setAddedPitch(matrix.getAddedPitch());
 					newMatrix.setAddedRotation(matrix.getAddedRotation());
 					newMatrix.setAddedTilt(matrix.getAddedTilt() + tilt);
-					newMatrix.setIfPitch(matrix.hasPitch());
+					newMatrix.hasPitch(matrix.hasPitch());
 					newMatrix.setPlayerLeft(matrix.getPlayerLeft());
 					newMatrix.setPlayerUp(matrix.getPlayerUp());
 					newMatrix.setStartTime(matrix.getStartTime());

@@ -3,6 +3,8 @@ package com.ruinscraft.powder.model;
 import com.ruinscraft.powder.PowdersCreationTask;
 import com.ruinscraft.powder.model.particle.PositionedPowderParticle;
 import com.ruinscraft.powder.model.particle.PowderParticle;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
@@ -11,6 +13,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.lang.Math.toRadians;
+
+@Data
 public class ParticleMatrix implements PowderElement {
 
 	// list of individual Layers associated with this ParticleMatrix
@@ -22,6 +27,7 @@ public class ParticleMatrix implements PowderElement {
 	// spacing for this ParticleMatrix
 	private double spacing;
 	// does the height of the player's eyes affect the direction of this ParticleMatrix?
+	@Accessors(fluent = true)
 	private boolean hasPitch;
 	// add values to the pitch
 	private double addedPitch;
@@ -82,13 +88,13 @@ public class ParticleMatrix implements PowderElement {
 
 	public void putPowderParticle(PowderParticle powderParticle, int x, int y, int z) {
 		PositionedPowderParticle newParticle =
-				new PositionedPowderParticle(powderParticle, x, y, z);
+			new PositionedPowderParticle(powderParticle, x, y, z);
 		addParticle(newParticle);
 	}
 
 	public int getMaxDistance() {
 		return getMaxZ() - getMinZ()
-				+ getMaxX() + getMaxY();
+			+ getMaxX() + getMaxY();
 	}
 
 	public int getMinZ() {
@@ -160,107 +166,10 @@ public class ParticleMatrix implements PowderElement {
 		particles.add(particle);
 	}
 
-	public int getPlayerLeft() {
-		return playerLeft;
-	}
-
-	public void setPlayerLeft(int playerLeft) {
-		this.playerLeft = playerLeft;
-	}
-
-	public int getPlayerUp() {
-		return playerUp;
-	}
-
-	public void setPlayerUp(int playerUp) {
-		this.playerUp = playerUp;
-	}
-
-	public double getSpacing() {
-		return spacing;
-	}
-
-	public void setSpacing(double spacing) {
-		this.spacing = spacing;
-	}
-
-	public boolean hasPitch() {
-		return hasPitch;
-	}
-
-	public void setIfPitch(boolean hasPitch) {
-		this.hasPitch = hasPitch;
-	}
-
-	public double getAddedPitch() {
-		return addedPitch;
-	}
-
-	public void setAddedPitch(double addedPitch) {
-		this.addedPitch = addedPitch;
-	}
-
-	public double getAddedRotation() {
-		return addedRotation;
-	}
-
-	public void setAddedRotation(double addedRotation) {
-		this.addedRotation = addedRotation;
-	}
-
-	public double getAddedTilt() {
-		return addedTilt;
-	}
-
-	public void setAddedTilt(double addedTilt) {
-		this.addedTilt = addedTilt;
-	}
-
-	@Override
-	public int getStartTime() {
-		return startTime;
-	}
-
-	@Override
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
-		this.nextTick = startTime;
-	}
-
-	@Override
-	public int getRepeatTime() {
-		return repeatTime;
-	}
-
-	@Override
-	public void setRepeatTime(int repeatTime) {
-		this.repeatTime = repeatTime;
-	}
-
-	@Override
-	public int getLockedIterations() {
-		return lockedIterations;
-	}
-
-	@Override
-	public void setLockedIterations(int lockedIterations) {
-		this.lockedIterations = lockedIterations;
-	}
-
-	@Override
-	public int getIterations() {
-		return iterations;
-	}
-
 	@Override
 	public void iterate() {
 		iterations++;
 		this.nextTick = PowdersCreationTask.getCurrentTick() + getRepeatTime();
-	}
-
-	@Override
-	public int getNextTick() {
-		return nextTick;
 	}
 
 	@Override
@@ -277,51 +186,60 @@ public class ParticleMatrix implements PowderElement {
 	@Override
 	public void create(final Location location) {
 		World world = location.getWorld();
-		double forwardPitch =
-				((location.clone().getPitch() + getAddedPitch() - 180) * Math.PI) / 180;
-		if (forwardPitch == 0) {
+		if (world == null)
+			return;
+
+		double forwardPitch = toRadians(location.getPitch() + getAddedPitch());
+		if (forwardPitch == 0)
 			forwardPitch = Math.PI / 180;
-		}
-		double upwardPitch =
-				((location.clone().getPitch() + getAddedPitch() - 90) * Math.PI) / 180;
+
+		double upwardPitch = toRadians(location.getPitch() + getAddedPitch() - 90);
 		if (!hasPitch()) {
-			forwardPitch = ((getAddedPitch() - 180) * Math.PI) / 180;
-			upwardPitch = ((getAddedPitch() - 90) * Math.PI) / 180;
+			forwardPitch = toRadians(getAddedPitch() - 180);
+			upwardPitch = toRadians(getAddedPitch() - 90);
 		}
-		double forwardYaw =
-				((location.clone().getYaw() + getAddedRotation() + 90) * Math.PI) / 180;
-		double sidewaysYaw =
-				((location.clone().getYaw() + getAddedRotation() + 180) * Math.PI) / 180;
-		double sidewaysTilt =
-				((getAddedTilt() - 90) * Math.PI) / 180;
 
-		final Vector sideToSideVector =
-				new Vector(Math.sin(sidewaysTilt) * Math.cos(sidewaysYaw),
-						Math.cos(sidewaysTilt),
-						Math.sin(sidewaysTilt) * Math.sin(sidewaysYaw))
-				.normalize().multiply(spacing);
-		final Vector upAndDownVector =
-				new Vector(Math.sin(upwardPitch + sidewaysTilt) * Math.cos(forwardYaw),
-						Math.cos(upwardPitch + sidewaysTilt),
-						Math.sin(upwardPitch + sidewaysTilt) * Math.sin(forwardYaw))
-				.normalize().multiply(spacing);
-		final Vector forwardVector =
-				new Vector(Math.sin(forwardPitch + sidewaysTilt) * Math.cos(forwardYaw),
-						Math.cos(forwardPitch - sidewaysTilt),
-						Math.sin(forwardPitch + sidewaysTilt) * Math.sin(forwardYaw))
-				.normalize().multiply(spacing);
+		double forwardYaw = toRadians(location.getYaw() + getAddedRotation() + 90);
+		double sidewaysYaw = toRadians(location.getYaw() + getAddedRotation() + 180);
+		double sidewaysTilt = toRadians(getAddedTilt() - 90);
 
-		Location start = location.clone().subtract((upAndDownVector.clone().multiply(getPlayerUp())))
-				.subtract(sideToSideVector.clone().multiply(getPlayerLeft()));
+		final Vector sideToSideVector = new Vector(
+			Math.sin(sidewaysTilt) * Math.cos(sidewaysYaw),
+			Math.cos(sidewaysTilt),
+			Math.sin(sidewaysTilt) * Math.sin(sidewaysYaw)
+		).normalize().multiply(spacing);
+
+		final Vector upAndDownVector = new Vector(
+			Math.sin(upwardPitch + sidewaysTilt) * Math.cos(forwardYaw),
+			Math.cos(upwardPitch + sidewaysTilt),
+			Math.sin(upwardPitch + sidewaysTilt) * Math.sin(forwardYaw)
+		).normalize().multiply(spacing);
+
+		final Vector forwardVector = new Vector(
+			Math.sin(forwardPitch + sidewaysTilt) * Math.cos(forwardYaw),
+			Math.cos(forwardPitch - sidewaysTilt),
+			Math.sin(forwardPitch + sidewaysTilt) * Math.sin(forwardYaw)
+		).normalize().multiply(spacing);
+
+		Location start = location.clone()
+			.subtract((upAndDownVector.clone().multiply(getPlayerUp())))
+			.subtract(sideToSideVector.clone().multiply(getPlayerLeft()));
+
 		for (PositionedPowderParticle particle : particles) {
 			Location position = start.clone()
-					.add(sideToSideVector.clone().multiply(particle.getX()))
-					.add(upAndDownVector.clone().multiply(particle.getY()))
-					.add(forwardVector.clone().multiply(particle.getZ()));
+				.add(sideToSideVector.clone().multiply(particle.getX()))
+				.add(upAndDownVector.clone().multiply(particle.getY()))
+				.add(forwardVector.clone().multiply(particle.getZ()));
+
 			world.spawnParticle(
-					particle.getParticle(), position, particle.getAmount(),
-					particle.getXOff() / 255, particle.getYOff() / 255,
-					particle.getZOff() / 255, particle.getData());
+				particle.getParticle(),
+				position,
+				particle.getAmount(),
+				particle.getXOff() / 255,
+				particle.getYOff() / 255,
+				particle.getZOff() / 255,
+				particle.getData()
+			);
 		}
 	}
 
