@@ -1465,12 +1465,12 @@ public class PowderUtil {
 	}
 
 	public static ParticleMatrix setFlash(ParticleMatrix matrix, int r, int g, int b, int flash) {
-		ParticleMatrix newMatrix = setMatrixRGB(matrix, r, g, b);
+		ParticleMatrix newMatrix = setNewRGB(matrix, r, g, b);
 		matrix.setStartTime(matrix.getStartTime() + flash);
 		return newMatrix;
 	}
 
-	private static ParticleMatrix setMatrixRGB(ParticleMatrix matrix, int r, int g, int b) {
+	public static ParticleMatrix setNewRGB(ParticleMatrix matrix, int r, int g, int b) {
 		ParticleMatrix newMatrix = new ParticleMatrix();
 		for (PositionedPowderParticle particle : matrix.getParticles()) {
 			if (particle.getParticle() != Particle.REDSTONE) {
@@ -1485,10 +1485,6 @@ public class PowderUtil {
 		}
 		setDefaults(matrix, newMatrix, matrix.getStartTime());
 		return newMatrix;
-	}
-
-	public static ParticleMatrix setNewRGB(ParticleMatrix matrix, int r, int g, int b) {
-		return setMatrixRGB(matrix, r, g, b);
 	}
 
 }
