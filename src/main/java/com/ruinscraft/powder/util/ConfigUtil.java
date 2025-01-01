@@ -295,7 +295,7 @@ public class ConfigUtil {
 					particle = Particle.NOTE;
 				}
 
-				if (particle == Particle.REDSTONE) {
+				if (particle == Particle.DUST) {
 					data = new DustOptions(Color.fromRGB(
 							(int) xOffset,
 							(int) yOffset,

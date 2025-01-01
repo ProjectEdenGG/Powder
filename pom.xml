@@ -11,16 +11,16 @@
 	<name>Powder</name>
 
 	<properties>
-		<maven.compiler.source>16</maven.compiler.source>
-		<maven.compiler.target>16</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 		<mainClass>com.ruinscraft.powder.PowderPlugin</mainClass>
 		<jar.finalName>${project.name}-${project.version}</jar.finalName>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+			<id>paper-repo</id>
+			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
 		<!-- for NoteBlockAPI -->
 		<repository>
@@ -34,18 +34,18 @@
 	</repositories>
 
 	<dependencies>
-		<!-- Spigot -->
+		<!-- Paper -->
 		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.17-R0.1-SNAPSHOT</version>
+			<groupId>io.papermc.paper</groupId>
+			<artifactId>paper-api</artifactId>
+			<version>1.21.3-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.20</version>
+			<version>1.18.36</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- MySQL -->
@@ -69,7 +69,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.3.0-SNAPSHOT</version>
+				<version>3.6.0</version>
 				<configuration>
 					<minimizeJar>true</minimizeJar>
 				</configuration>

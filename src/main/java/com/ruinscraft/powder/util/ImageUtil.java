@@ -130,7 +130,7 @@ public class ImageUtil {
 						org.bukkit.Color.fromRGB(r, g, b), particleSize);
 
 				PositionedPowderParticle powderParticle = new PositionedPowderParticle(
-						Particle.REDSTONE, 0, r, g, b, data, x + xAdd, y + yAdd, z);
+						Particle.DUST, 0, r, g, b, data, x + xAdd, y + yAdd, z);
 				particles.add(powderParticle);
 			}
 		}

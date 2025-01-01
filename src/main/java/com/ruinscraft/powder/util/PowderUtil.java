@@ -1473,7 +1473,7 @@ public class PowderUtil {
 	public static ParticleMatrix setNewRGB(ParticleMatrix matrix, int r, int g, int b) {
 		ParticleMatrix newMatrix = new ParticleMatrix();
 		for (PositionedPowderParticle particle : matrix.getParticles()) {
-			if (particle.getParticle() != Particle.REDSTONE) {
+			if (particle.getParticle() != Particle.DUST) {
 				continue;
 			}
 			PowderParticle newParticle = particle.clone();
